@@ -1,0 +1,72 @@
+@use "sass:map";
+
+// ── Palettes phosphore ────────────────────────────────────────────────
+// Choisir la palette via `$phosphor-theme` ("orange", "amber", "green"),
+// ou poser `data-phosphor="green"` (etc.) sur <html> à l'exécution.
+$palettes: (
+  "orange": (
+    fg: #ff8c1a,
+    dim: #b35c0a,
+    faint: #4d2706,
+    bg: #080400,
+    glow: rgba(255, 140, 26, 0.45),
+    alert: #ffe14d,
+    danger: #ff3b3b,
+    sun: #3fd0ff,
+    sun-dim: #1d6f8f,
+  ),
+  "green": (
+    fg: #33ff66,
+    dim: #1f9e44,
+    faint: #0f4d22,
+    bg: #010802,
+    glow: rgba(51, 255, 102, 0.45),
+    alert: #ffd23f,
+    danger: #ff4d3d,
+    sun: #ffe14d,
+    sun-dim: #8c7a1f,
+  ),
+  "amber": (
+    fg: #ffb000,
+    dim: #b37a00,
+    faint: #4d3400,
+    bg: #0a0600,
+    glow: rgba(255, 176, 0, 0.45),
+    alert: #fff1a8,
+    danger: #ff4d3d,
+    sun: #6fe0ff,
+    sun-dim: #2a7a94,
+  ),
+);
+
+$phosphor-theme: "orange" !default;
+
+// Les composants n'utilisent que ces alias (custom properties, donc
+// lisibles aussi depuis Three.js via getComputedStyle).
+$color-fg: var(--color-fg);
+$color-dim: var(--color-dim);
+$color-faint: var(--color-faint);
+$color-bg: var(--color-bg);
+$color-glow: var(--color-glow);
+$color-alert: var(--color-alert);
+$color-danger: var(--color-danger);
+// Terminateur : lever (sun) et coucher (sun-dim) du soleil.
+$color-sun: var(--color-sun);
+$color-sun-dim: var(--color-sun-dim);
+
+// ── Typographie ───────────────────────────────────────────────────────
+$font-mono: "VT323", "IBM Plex Mono", "Consolas", monospace;
+$font-size-base: clamp(16px, 1.45vw, 26px);
+$line-height: 1.15;
+
+// ── Espacements (en ch / em pour rester sur la grille de caractères) ──
+$space-xs: 0.25em;
+$space-sm: 0.5em;
+$space-md: 1em;
+$space-lg: 1.5em;
+$border-width: 2px;
+
+// ── Effets ────────────────────────────────────────────────────────────
+$glow-text: 0 0 2px $color-glow, 0 0 8px $color-glow;
+$scanline-opacity: 0.18;
+$blink-period: 1.2s;

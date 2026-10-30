@@ -1,93 +1,116 @@
 # Vigie
 
+Suivi d'objets en orbite (ISS, Hubble, Tiangong, Landsat 9) au look TUI rétro, façon écran de station sol.
+Application desktop **Tauri 2** (Rust) + **Vue 3 / TypeScript / SCSS** + **Three.js**.
+Les positions sont calculées côté Rust avec SGP4, à partir des éléments GP publiés par [CelesTrak](https://celestrak.org).
 
+## Prérequis
 
-## Getting started
+- Node.js ≥ 20 et npm
+- Rust stable (≥ 1.88, édition 2024) avec `clippy`
+- Prérequis système Tauri : <https://tauri.app/start/prerequisites/> (WebView2 sous Windows, `webkit2gtk-4.1` sous Linux / Raspberry Pi OS)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Pas d'OpenSSL : `reqwest` utilise `rustls`. La police VT323 est embarquée dans le bundle, donc l'interface fonctionne hors ligne. Il faut toutefois le réseau pour récupérer les TLE.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Commandes
 
-## Add your files
+```sh
+npm install
+npm run tauri dev       # lancement en développement
+npm run tauri build     # binaire + installeur dans src-tauri/target/release/bundle
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+# Vérifications
+npx vue-tsc --noEmit
+cd src-tauri
+cargo clippy --all-targets -- -D warnings
+cargo test                  # tests unitaires (hors ligne)
+cargo test -- --ignored     # vérifie les numéros NORAD du catalogue sur CelesTrak (réseau)
+```
+
+## Architecture
+
+### Backend (`src-tauri/src/`)
+
+Les couches sont strictes, et chacune ne connaît que celle d'en dessous :
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/Baptiste_Mary/vigie.git
-git branch -M main
-git push -uf origin main
+services/   #[tauri::command] : aucune logique, délègue à une facade
+   │
+facades/    logique métier, injectées via app.manage()
+   │          SpaceObjectFacade  catalogue des objets suivis
+   │          TelemetryFacade    cache TLE (12 h), propagation SGP4, calculs dérivés, trajectoire
+   │          SolarFacade        point subsolaire et terminateur jour/nuit
+   │          orbit_math         fonctions pures : GMST, TEME → ECEF → géodésique WGS84, apogée/périgée
+   │          solar_math         fonctions pures : position du Soleil (Astronomical Almanac), terminateur
+   ├── mappers/   fonctions pures, modèle interne → DTO (SpaceObject-, Telemetry-, TrajectoryMapper)
+   ├── clients/   HTTP CelesTrak + désérialisation brute (OMM JSON → sgp4::Elements)
+   └── models/    modèles internes (SpaceObject, OrbitalState, Trajectory, GeodeticPosition)
+dto/        structures sérialisées vers le front (camelCase)
+error.rs    AppError (thiserror), sérialisé en { kind, message }
 ```
 
-## Integrate with your tools
+Commandes exposées :
+- `get_space_objects`
+- `get_telemetry(noradId)` : interrogée chaque seconde par le front.
+- `get_trajectory(noradId)` : positions sur −½ à +1 période autour de l'instant courant, un point toutes les 30 s. Interrogée toutes les 30 s.
+- `get_solar_state` : point subsolaire et terminateur, tous les 1° de longitude, avec la phase lever ou coucher. Interrogée chaque minute.
 
-* [Set up project integrations](https://gitlab.com/Baptiste_Mary/vigie/-/settings/integrations)
+Comportement réseau de `TelemetryFacade` :
+- Les éléments de chaque objet sont mis en cache 12 h.
+- Si CelesTrak est injoignable, la facade réutilise les derniers éléments connus. Le front affiche alors `DATA STALE` dès que le TLE a plus de 72 h.
+- Après un échec, aucune nouvelle requête n'est envoyée pendant 30 s, pour ne pas solliciter CelesTrak à chaque polling.
 
-## Collaborate with your team
+### Front (`src/`)
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+```
+views/MainView.vue     mise en page : globe (2/3) | objets + télémétrie (1/3)
+components/            TuiPanel (cadre), DataRow (ligne alignée), ViewTabs (onglets),
+                       EarthGlobe (Three.js), WorldMap (SVG), ObjectList, TelemetryPanel
+composables/           usePolling (générique), useSpaceObjects (liste + sélection),
+                       useTelemetry (1 s), useTrajectory (30 s), useSolarState (60 s)
+assets/geo/            côtes Natural Earth 1:110m (domaine public), compactées en [lon, lat]
+services/              wrappers typés : seul invokeCommand.ts appelle invoke()
+types/                 miroirs TypeScript des DTO Rust
+utils/                 formatage à largeur fixe, lat/lon → scène 3D, projection équirectangulaire
+                       (découpage à l'antiméridien), découpage passé/futur de la trajectoire
+styles/                _variables.scss (palettes), _mixins.scss, main.scss (reset, scanlines)
+```
 
-## Test and Deploy
+Règles du front :
+- TypeScript est en mode strict, sans `any`.
+- Les composants n'appellent jamais `invoke()` directement.
+- Les couleurs viennent uniquement de `_variables.scss`.
 
-Use the built-in continuous integration in GitLab.
+### Globe
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+Le globe affiche, sur une sphère fil de fer :
+- le graticule (tous les 15°) et les côtes ;
+- la trajectoire de l'objet sélectionné : passé atténué, futur en pleine intensité, partie cachée derrière la Terre en transparence ;
+- un marqueur à la position courante, relié au sol par sa ligne de nadir.
 
-***
+Tout est exprimé en repère terrestre, ce qui garde la trajectoire cohérente avec les continents. La rotation du globe est décorative (un tour par minute).
 
-# Editing this README
+### Planisphère
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+C'est une projection équirectangulaire en SVG. Elle affiche :
+- les côtes et une grille tous les 30° ;
+- la trajectoire passée et future de l'objet ;
+- la position de l'objet (réticule clignotant) ;
+- le point subsolaire ;
+- le terminateur : lever du soleil en trait plein dans la couleur `sun`, coucher en pointillés dans la couleur `sun-dim` ;
+- la zone de nuit, en ombré.
 
-## Suggestions for a good README
+Le globe et le planisphère se partagent la zone de gauche. On bascule de l'un à l'autre avec les onglets ou la touche `V`. Quand le globe est masqué, il est démonté et sa scène WebGL est libérée.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+### Thème
 
-## Name
-Choose a self-explaining name for your project.
+Trois palettes sont disponibles : `orange` (par défaut), `amber` et `green`. Pour en changer :
+- à la compilation, modifier `$phosphor-theme` dans `src/styles/_variables.scss` ;
+- à l'exécution, ajouter `data-phosphor="green"` sur `<html>`. Les couleurs du globe sont lues au montage.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### Clavier
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- `↑` / `↓` déplacent le curseur dans la liste des objets.
+- `Entrée` sélectionne l'objet sous le curseur.
+- Un clic sur un objet le sélectionne aussi.
+- `V` bascule entre le globe et le planisphère.

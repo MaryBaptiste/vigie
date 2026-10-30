@@ -1,0 +1,28 @@
+@use "variables" as *;
+
+@mixin glow {
+  text-shadow: $glow-text;
+}
+
+/// Vidéo inverse, comme un curseur de terminal.
+@mixin inverse {
+  background: $color-fg;
+  color: $color-bg;
+  text-shadow: none;
+}
+
+@mixin blink($period: $blink-period) {
+  animation: tui-blink $period steps(1, end) infinite;
+}
+
+/// Une seule ligne, coupée proprement.
+@mixin single-line {
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+@mixin uppercase-label {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
