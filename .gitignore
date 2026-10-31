@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Sources brutes téléchargées par tools/fetch_sources.py
+tools/raw/
+__pycache__/

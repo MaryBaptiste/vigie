@@ -3,5 +3,6 @@ import { createApp } from "vue";
 import "@fontsource/vt323/400.css";
 import "./styles/main.scss";
 import App from "./App.vue";
+import { router } from "./router";
 
-createApp(App).mount("#app");
+createApp(App).use(router).mount("#app");

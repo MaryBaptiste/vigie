@@ -6,6 +6,9 @@ const KNOWN_KINDS: readonly AppErrorKind[] = [
   "invalidResponse",
   "notFound",
   "propagation",
+  "invalidInput",
+  "storage",
+  "catalog",
 ];
 
 function isRecord(value: unknown): value is Record<string, unknown> {

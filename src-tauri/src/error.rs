@@ -8,7 +8,8 @@ pub enum AppError {
     #[error("network error: {0}")]
     Network(#[from] reqwest::Error),
 
-    #[error("invalid response from CelesTrak: {0}")]
+    /// Réponse illisible d'un service distant (CelesTrak, Minor Planet Center).
+    #[error("invalid upstream response: {0}")]
     InvalidResponse(String),
 
     #[error("no orbital data found for NORAD {0}")]
@@ -19,6 +20,15 @@ pub enum AppError {
 
     #[error("upstream unavailable, retry in {retry_in_secs}s: {message}")]
     Backoff { retry_in_secs: u64, message: String },
+
+    #[error("invalid input: {0}")]
+    InvalidInput(String),
+
+    #[error("storage error: {0}")]
+    Storage(String),
+
+    #[error("embedded catalog is corrupted: {0}")]
+    Catalog(String),
 }
 
 impl AppError {
@@ -28,6 +38,9 @@ impl AppError {
             AppError::InvalidResponse(_) => "invalidResponse",
             AppError::NotFound(_) => "notFound",
             AppError::Propagation(_) => "propagation",
+            AppError::InvalidInput(_) => "invalidInput",
+            AppError::Storage(_) => "storage",
+            AppError::Catalog(_) => "catalog",
         }
     }
 }
@@ -52,5 +65,9 @@ mod tests {
         let json = serde_json::to_value(AppError::NotFound(42)).unwrap();
         assert_eq!(json["kind"], "notFound");
         assert_eq!(json["message"], "no orbital data found for NORAD 42");
+
+        let json = serde_json::to_value(AppError::InvalidInput("latitude out of range".into())).unwrap();
+        assert_eq!(json["kind"], "invalidInput");
+        assert_eq!(json["message"], "invalid input: latitude out of range");
     }
 }

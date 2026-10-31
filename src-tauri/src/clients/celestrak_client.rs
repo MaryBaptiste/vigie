@@ -39,7 +39,7 @@ impl CelestrakClient {
         }
 
         let mut records: Vec<sgp4::Elements> =
-            serde_json::from_str(&body).map_err(|e| AppError::InvalidResponse(e.to_string()))?;
+            serde_json::from_str(&body).map_err(|e| AppError::InvalidResponse(format!("CelesTrak: {e}")))?;
         Ok(if records.is_empty() {
             None
         } else {

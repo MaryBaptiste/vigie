@@ -18,3 +18,9 @@ export function latLonToVector3(latDeg: number, lonDeg: number, altitudeKm = 0, 
     r * Math.cos(lat) * Math.cos(lon),
   );
 }
+
+/** Inverse de `latLonToVector3` (le rayon est ignoré). */
+export function vector3ToLatLon(point: Vector3): [latDeg: number, lonDeg: number] {
+  const p = point.clone().normalize();
+  return [(Math.asin(p.y) * 180) / Math.PI, (Math.atan2(p.x, p.z) * 180) / Math.PI];
+}

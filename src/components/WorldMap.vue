@@ -22,7 +22,7 @@ const LABEL_FLIP_X = MAP_WIDTH - 40;
 
 // ── Fond statique (calculé une seule fois) ────────────────────────────
 const coastPolylines = coastlines.flatMap((polyline) =>
-  toMapPolylines(polyline.map(([lon, lat]) => ({ latitudeDeg: lat, longitudeDeg: lon }))),
+  toMapPolylines(polyline.map(([lon = 0, lat = 0]) => ({ latitudeDeg: lat, longitudeDeg: lon }))),
 );
 
 interface GridLine {

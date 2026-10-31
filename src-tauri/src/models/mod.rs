@@ -1,9 +1,21 @@
+pub mod celestial_body;
+pub mod comet;
+pub mod constellation;
+pub mod observer;
 pub mod orbital_state;
+pub mod sky;
 pub mod solar;
 pub mod space_object;
+pub mod star;
 pub mod trajectory;
 
+pub use celestial_body::{BodyKind, BodyReport, CelestialBody, MoonPhaseKind, NightInfo, Visibility};
+pub use comet::{Comet, CometCatalogStatus, CometDataSource};
+pub use constellation::{Constellation, ConstellationSegment};
+pub use observer::Observer;
 pub use orbital_state::{GeodeticPosition, OrbitalState};
+pub use sky::{SkySnapshot, SkyState, VisibleConstellation, VisibleSegment, VisibleStar};
 pub use solar::{GeoPoint, SolarState, TerminatorPoint};
 pub use space_object::SpaceObject;
+pub use star::Star;
 pub use trajectory::{Trajectory, TrajectoryPoint};
