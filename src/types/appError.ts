@@ -4,6 +4,9 @@ export type AppErrorKind =
   | "invalidResponse"
   | "notFound"
   | "propagation"
+  | "invalidInput"
+  | "storage"
+  | "catalog"
   | "unknown";
 
 export interface AppError {

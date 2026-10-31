@@ -14,6 +14,9 @@ $palettes: (
     danger: #ff3b3b,
     sun: #3fd0ff,
     sun-dim: #1d6f8f,
+    sky-night: #080400,
+    sky-twilight: #150b03,
+    sky-day: #2a1806,
   ),
   "green": (
     fg: #33ff66,
@@ -25,6 +28,9 @@ $palettes: (
     danger: #ff4d3d,
     sun: #ffe14d,
     sun-dim: #8c7a1f,
+    sky-night: #010802,
+    sky-twilight: #04140a,
+    sky-day: #0a2614,
   ),
   "amber": (
     fg: #ffb000,
@@ -36,6 +42,9 @@ $palettes: (
     danger: #ff4d3d,
     sun: #6fe0ff,
     sun-dim: #2a7a94,
+    sky-night: #0a0600,
+    sky-twilight: #170e02,
+    sky-day: #2d1d04,
   ),
 );
 
@@ -50,9 +59,13 @@ $color-bg: var(--color-bg);
 $color-glow: var(--color-glow);
 $color-alert: var(--color-alert);
 $color-danger: var(--color-danger);
-// Terminateur : lever (sun) et coucher (sun-dim) du soleil.
+// Soleil : terminateur (lever sun, coucher sun-dim), symbole et statut « noyé dans le jour ».
 $color-sun: var(--color-sun);
 $color-sun-dim: var(--color-sun-dim);
+// Fond de la voûte selon l'état du ciel (nuit, crépuscule, jour).
+$color-sky-night: var(--color-sky-night);
+$color-sky-twilight: var(--color-sky-twilight);
+$color-sky-day: var(--color-sky-day);
 
 // ── Typographie ───────────────────────────────────────────────────────
 $font-mono: "VT323", "IBM Plex Mono", "Consolas", monospace;

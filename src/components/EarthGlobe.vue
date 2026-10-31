@@ -128,8 +128,8 @@ function buildCoastlines(): BufferGeometry {
   const b = new Vector3();
   for (const polyline of coastlines) {
     for (let i = 0; i + 1 < polyline.length; i++) {
-      const [lonA, latA] = polyline[i];
-      const [lonB, latB] = polyline[i + 1];
+      const [lonA = 0, latA = 0] = polyline[i] ?? [];
+      const [lonB = 0, latB = 0] = polyline[i + 1] ?? [];
       latLonToVector3(latA, lonA, 0, a);
       latLonToVector3(latB, lonB, 0, b);
       positions.push(a.x, a.y, a.z, b.x, b.y, b.z);
