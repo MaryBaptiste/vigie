@@ -1,5 +1,9 @@
 # Vigie
 
+![Version](https://img.shields.io/badge/version-1.0.0-orange) ![Licence MIT](https://img.shields.io/badge/licence-MIT-blue)
+
+Créé par **[Baptiste Mary](https://github.com/MaryBaptiste)**.
+
 Station sol au look TUI rétro, en trois écrans :
 
 - **[F1] Orbite** (écran d'accueil) : suivi d'objets en orbite (ISS, Hubble, Tiangong, Landsat 9) sur un globe ou un planisphère, avec leur télémétrie. Les positions sont calculées côté Rust avec SGP4, à partir des éléments GP publiés par [CelesTrak](https://celestrak.org).
@@ -252,3 +256,11 @@ Contrôles manuels, aussi couverts par les tests de `SkyFacade` :
 
 - L'heure « LOCAL » est celle de la machine. Faute de base de fuseaux hors ligne, la barre d'état affiche aussi le temps solaire moyen du lieu observé.
 - La teinte B−V des étoiles reste dans la palette : légèrement vers `sun` pour les étoiles chaudes, vers `danger` pour les étoiles froides.
+
+## Auteur et licence
+
+Vigie est conçu et développé par **Baptiste Mary** ([@MaryBaptiste](https://github.com/MaryBaptiste)).
+
+Le code source est distribué sous licence **MIT** : voir [`LICENSE`](LICENSE). Les données embarquées restent sous leurs licences respectives, listées dans la section « Données du planétarium : sources, licences et attributions ».
+
+Les contributions sont bienvenues : ouvrez une [issue](https://github.com/MaryBaptiste/vigie/issues) ou une pull request.

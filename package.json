@@ -1,7 +1,27 @@
 {
   "name": "vigie",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Station sol au look TUI rétro : suivi d'objets en orbite (SGP4) et planétarium.",
+  "author": "Baptiste Mary (https://github.com/MaryBaptiste)",
+  "license": "MIT",
+  "homepage": "https://github.com/MaryBaptiste/vigie#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaryBaptiste/vigie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MaryBaptiste/vigie/issues"
+  },
+  "keywords": [
+    "tauri",
+    "vue",
+    "astronomy",
+    "planetarium",
+    "satellite-tracking",
+    "sgp4",
+    "tui"
+  ],
   "type": "module",
   "scripts": {
     "run": "tauri dev",
