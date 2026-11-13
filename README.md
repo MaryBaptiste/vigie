@@ -1,6 +1,6 @@
 # Vigie
 
-![Version](https://img.shields.io/badge/version-1.0.0-orange) ![Licence MIT](https://img.shields.io/badge/licence-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.1.0-orange) ![Licence MIT](https://img.shields.io/badge/licence-MIT-blue)
 
 Créé par **[Baptiste Mary](https://github.com/MaryBaptiste)**.
 
