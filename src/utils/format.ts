@@ -24,7 +24,7 @@ export function latLon(latDeg: number, lonDeg: number, decimals = 1): string {
 /** Version courte du titre de la carte : `48.86N 2.35E`. */
 export function shortLatLon(latDeg: number, lonDeg: number): string {
   const lat = `${Math.abs(latDeg).toFixed(2)}${latDeg < 0 ? "S" : "N"}`;
-  const lon = `${Math.abs(lonDeg).toFixed(2)}${lonDeg < 0 ? "O" : "E"}`;
+  const lon = `${Math.abs(lonDeg).toFixed(2)}${lonDeg < 0 ? "W" : "E"}`;
   return `${lat} ${lon}`;
 }
 
@@ -94,7 +94,7 @@ export function sexagesimal(deg: number): string {
   return `${deg < 0 ? "-" : "+"}${pad2(d)}°${pad2(m)}′${pad2(s)}″`;
 }
 
-const CARDINALS = ["N", "NE", "E", "SE", "S", "SO", "O", "NO"] as const;
+const CARDINALS = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"] as const;
 
 /** Point cardinal le plus proche d'un azimut. */
 export function cardinal(azimuthDeg: number): string {

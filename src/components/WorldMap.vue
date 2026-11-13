@@ -118,7 +118,7 @@ const marker = computed(() => {
       :viewBox="`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`"
       preserveAspectRatio="xMidYMid meet"
       role="img"
-      aria-label="Planisphère"
+      aria-label="World map"
     >
       <rect class="world-map__frame" x="0" y="0" :width="MAP_WIDTH" :height="MAP_HEIGHT" />
 
@@ -176,11 +176,11 @@ const marker = computed(() => {
     </svg>
 
     <ul class="world-map__legend">
-      <li><span class="swatch swatch--track" />Trajectoire</li>
-      <li><span class="swatch swatch--past" />Passé</li>
-      <li><span class="swatch swatch--sunrise" />Lever du soleil</li>
-      <li><span class="swatch swatch--sunset" />Coucher</li>
-      <li><span class="swatch swatch--night" />Nuit</li>
+      <li><span class="swatch swatch--track" />Track</li>
+      <li><span class="swatch swatch--past" />Past</li>
+      <li><span class="swatch swatch--sunrise" />Sunrise</li>
+      <li><span class="swatch swatch--sunset" />Sunset</li>
+      <li><span class="swatch swatch--night" />Night</li>
     </ul>
   </div>
 </template>

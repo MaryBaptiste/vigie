@@ -26,7 +26,7 @@ mod tests {
         norad_id: 25544,
         name: "ISS (ZARYA)",
         short_name: "ISS",
-        description: "Station spatiale internationale",
+        description: "International Space Station",
     };
 
     #[test]
@@ -35,7 +35,7 @@ mod tests {
         assert_eq!(dto.norad_id, 25544);
         assert_eq!(dto.name, "ISS (ZARYA)");
         assert_eq!(dto.short_name, "ISS");
-        assert_eq!(dto.description, "Station spatiale internationale");
+        assert_eq!(dto.description, "International Space Station");
     }
 
     #[test]

@@ -16,7 +16,7 @@ type VisualizationView = "globe" | "map";
 
 const VIEWS: readonly ViewOption<VisualizationView>[] = [
   { id: "globe", label: "Globe" },
-  { id: "map", label: "Planisphère" },
+  { id: "map", label: "World map" },
 ];
 
 const view = ref<VisualizationView>("globe");
@@ -33,8 +33,8 @@ const selectedName = computed(
 const visualizationStatus = computed(() => {
   if (view.value === "globe") return "WGS84 · Tilt 23.4°";
   return solar.value
-    ? `Soleil ${latLon(solar.value.subsolarLatitudeDeg, solar.value.subsolarLongitudeDeg)}`
-    : "Soleil ---";
+    ? `Sun ${latLon(solar.value.subsolarLatitudeDeg, solar.value.subsolarLongitudeDeg)}`
+    : "Sun ---";
 });
 </script>
 

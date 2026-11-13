@@ -11,13 +11,13 @@ const props = defineProps<{
 }>();
 
 const SOURCES = {
-  NETWORK: "RÉSEAU (MPC)",
-  CACHE: "CACHE DISQUE",
-  OFFLINE: "CACHE, HORS LIGNE",
-  LOADING: "TÉLÉCHARGEMENT…",
+  NETWORK: "NETWORK (MPC)",
+  CACHE: "DISK CACHE",
+  OFFLINE: "CACHE, OFFLINE",
+  LOADING: "DOWNLOADING…",
 } as const;
 
-const updatedAt = computed(() => (props.status?.updatedAt ? `${utcDateTime(props.status.updatedAt)} UTC` : "JAMAIS"));
+const updatedAt = computed(() => (props.status?.updatedAt ? `${utcDateTime(props.status.updatedAt)} UTC` : "NEVER"));
 </script>
 
 <template>
@@ -26,9 +26,9 @@ const updatedAt = computed(() => (props.status?.updatedAt ? `${utcDateTime(props
       <span v-if="status?.source === 'OFFLINE'" class="comet-status__flag comet-status__flag--offline">OFFLINE</span>
       <span v-if="status?.stale" class="comet-status__flag comet-status__flag--stale">DATA STALE</span>
     </div>
-    <DataRow label="Éléments MPC" :value="updatedAt" :tone="status?.stale ? 'alert' : 'normal'" />
+    <DataRow label="MPC elements" :value="updatedAt" :tone="status?.stale ? 'alert' : 'normal'" />
     <DataRow label="Source" :value="status ? SOURCES[status.source] : '---'" />
-    <DataRow label="Catalogue" :value="String(status?.cometCount ?? 0)" unit="cmt" />
+    <DataRow label="Catalog" :value="String(status?.cometCount ?? 0)" unit="cmt" />
     <DataRow label="Mag ≤ 12" :value="String(brightCount)" unit="cmt" />
   </div>
 </template>

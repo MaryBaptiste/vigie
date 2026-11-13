@@ -4,7 +4,7 @@ export interface SkyPick {
   /** Numéro HR pour une étoile, identifiant backend pour un objet. */
   id: string;
   name: string;
-  /** Nature de l'objet, ex. `PLANÈTE`, `HR 7001`. */
+  /** Nature de l'objet, ex. `PLANET`, `HR 7001`. */
   subtitle: string;
   magnitude: number;
   azimuthDeg: number;

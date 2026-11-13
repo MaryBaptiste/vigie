@@ -40,15 +40,15 @@ function submit(): void {
   const longitudeDeg = parse(form.value.lon);
   const altitudeM = form.value.alt.trim() === "" ? 0 : parse(form.value.alt);
   if (!(Math.abs(latitudeDeg) <= 90)) {
-    formError.value = "LATITUDE ENTRE -90 ET 90";
+    formError.value = "LATITUDE BETWEEN -90 AND 90";
     return;
   }
   if (!(Math.abs(longitudeDeg) <= 180)) {
-    formError.value = "LONGITUDE ENTRE -180 ET 180";
+    formError.value = "LONGITUDE BETWEEN -180 AND 180";
     return;
   }
   if (!Number.isFinite(altitudeM)) {
-    formError.value = "ALTITUDE INVALIDE";
+    formError.value = "INVALID ALTITUDE";
     return;
   }
   emit("change", { latitudeDeg, longitudeDeg, altitudeM, label: form.value.label.trim() });
@@ -64,9 +64,9 @@ watch(
 <template>
   <div class="observer-panel">
     <template v-if="observer">
-      <DataRow label="Lieu" :value="observer.label.toUpperCase()" />
+      <DataRow label="Place" :value="observer.label.toUpperCase()" />
       <DataRow label="Lat" :value="hemisphere(observer.latitudeDeg, 'N', 'S', 2, 2)" />
-      <DataRow label="Lon" :value="hemisphere(observer.longitudeDeg, 'E', 'O', 2, 3)" />
+      <DataRow label="Lon" :value="hemisphere(observer.longitudeDeg, 'E', 'W', 2, 3)" />
       <DataRow label="Alt" :value="fixed(observer.altitudeM, 0, 5)" unit="m" />
     </template>
     <DataRow v-else label="Position" value="---" tone="muted" />
@@ -75,10 +75,10 @@ watch(
       <TuiInput v-model="form.lat" label="Lat" type="number" width="9ch" @submit="submit" />
       <TuiInput v-model="form.lon" label="Lon" type="number" width="9ch" @submit="submit" />
       <TuiInput v-model="form.alt" label="Alt m" type="number" width="6ch" @submit="submit" />
-      <TuiInput v-model="form.label" label="Nom" width="14ch" @submit="submit" />
+      <TuiInput v-model="form.label" label="Name" width="14ch" @submit="submit" />
       <div class="observer-panel__actions">
         <TuiButton label="OK" @click="submit" />
-        <TuiButton label="Annuler" @click="editing = false" />
+        <TuiButton label="Cancel" @click="editing = false" />
       </div>
       <div v-if="formError" class="observer-panel__error">{{ formError }}</div>
     </form>
@@ -91,7 +91,7 @@ watch(
         :active="observer?.label === city.label"
         @click="emit('change', city)"
       />
-      <TuiButton label="Saisie" @click="openForm" />
+      <TuiButton label="Enter" @click="openForm" />
     </div>
     <div v-if="error" class="observer-panel__error">{{ error }}</div>
   </div>

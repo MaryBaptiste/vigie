@@ -82,7 +82,7 @@ export function useTimeControl() {
     paused: readonly(paused),
     live: readonly(live),
     revision: readonly(revision),
-    mode: computed(() => (paused.value ? "PAUSE" : live.value ? "TEMPS RÉEL" : `x${speed.value}`)),
+    mode: computed(() => (paused.value ? "PAUSE" : live.value ? "REAL TIME" : `x${speed.value}`)),
     simNowMs,
     setSpeed,
     togglePause,

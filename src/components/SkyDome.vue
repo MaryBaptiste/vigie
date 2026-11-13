@@ -23,7 +23,7 @@ const props = defineProps<{
 const selected = defineModel<SkyPick | null>("selected", { default: null });
 
 const RAD = Math.PI / 180;
-const CARDINALS = ["N", "NE", "E", "SE", "S", "SO", "O", "NO"] as const;
+const CARDINALS = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"] as const;
 const BRIGHT_STAR_LIMIT = 1.5;
 const MAX_ZOOM = 8;
 const FOCUS_ZOOM = 2.5;
@@ -106,23 +106,23 @@ function font(scale: number): string {
 
 function skyBackground(state: SkyState, colors: PhosphorPalette): string {
   switch (state) {
-    case "NUIT":
+    case "NIGHT":
       return colors.skyNight;
-    case "CRÉPUSCULE ASTRONOMIQUE":
+    case "ASTRONOMICAL TWILIGHT":
       return mixColors(colors.skyNight, colors.skyTwilight, 0.5);
-    case "CRÉPUSCULE NAUTIQUE":
+    case "NAUTICAL TWILIGHT":
       return colors.skyTwilight;
-    case "CRÉPUSCULE CIVIL":
+    case "CIVIL TWILIGHT":
       return mixColors(colors.skyTwilight, colors.skyDay, 0.5);
-    case "JOUR":
+    case "DAY":
       return colors.skyDay;
   }
 }
 
 /** Les étoiles pâlissent quand le ciel s'éclaire (sans disparaître : c'est une carte). */
 function starDimming(state: SkyState): number {
-  if (state === "JOUR") return 0.35;
-  if (state === "CRÉPUSCULE CIVIL") return 0.6;
+  if (state === "DAY") return 0.35;
+  if (state === "CIVIL TWILIGHT") return 0.6;
   return 1;
 }
 
@@ -189,7 +189,7 @@ function drawConstellationNames(c: CanvasRenderingContext2D, colors: PhosphorPal
     const [e, n, u] = vectorAt(buffers.labels, i * 3);
     if (Number.isNaN(e) || u < 0.03) return;
     const [x, y] = project(e, n, u);
-    c.fillText(constellation.frenchName.toUpperCase(), x, y);
+    c.fillText(constellation.latinName.toUpperCase(), x, y);
   });
 }
 
@@ -391,7 +391,7 @@ function pickStar(current: PreparedFrame, index: number): SkyPick | null {
     kind: "star",
     id: String(star.id),
     name: star.name ?? `HR ${star.id}`,
-    subtitle: `ÉTOILE · HR ${star.id}`,
+    subtitle: `STAR · HR ${star.id}`,
     magnitude: star.magnitude,
     ...enuToHorizontal(e, n, u),
     illumination: null,
@@ -473,7 +473,7 @@ function render(timeMs: number): void {
     c.fillStyle = colors.dim;
     c.font = font(1);
     c.textAlign = "center";
-    c.fillText("ACQUISITION DU CIEL…", width / 2, height / 2);
+    c.fillText("ACQUIRING SKY…", width / 2, height / 2);
     return;
   }
   applyPendingFocus(current);

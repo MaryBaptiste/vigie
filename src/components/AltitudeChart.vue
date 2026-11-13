@@ -41,8 +41,8 @@ const axis = computed(() => {
 </span><span class="altitude-chart__scale">   └</span>{{ "─".repeat(width) }}
 <span class="altitude-chart__scale">    </span><span class="altitude-chart__marker">{{ marker }}</span>
 <span class="altitude-chart__scale">    </span>{{ axis }}</pre>
-    <div v-if="best" class="altitude-chart__best">MEILLEUR MOMENT {{ best.label }} · {{ best.altitude.toFixed(0) }}°</div>
-    <div v-else class="altitude-chart__best altitude-chart__best--none">JAMAIS AU-DESSUS DE L'HORIZON CETTE NUIT</div>
+    <div v-if="best" class="altitude-chart__best">BEST TIME {{ best.label }} · {{ best.altitude.toFixed(0) }}°</div>
+    <div v-else class="altitude-chart__best altitude-chart__best--none">NEVER ABOVE THE HORIZON TONIGHT</div>
   </div>
 </template>
 

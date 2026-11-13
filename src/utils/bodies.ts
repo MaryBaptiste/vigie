@@ -25,10 +25,10 @@ export function bodySymbol(id: string, bodyType: BodyType): string {
 }
 
 const TYPE_LABELS: Readonly<Record<BodyType, string>> = {
-  SUN: "ÉTOILE",
+  SUN: "STAR",
   MOON: "SATELLITE",
-  PLANET: "PLANÈTE",
-  COMET: "COMÈTE",
+  PLANET: "PLANET",
+  COMET: "COMET",
 };
 
 export function bodyTypeLabel(bodyType: BodyType): string {

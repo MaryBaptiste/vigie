@@ -75,7 +75,7 @@ mod tests {
     fn maps_snapshot() {
         let star = Star {
             id: 7001,
-            name: Some("Véga".into()),
+            name: Some("Vega".into()),
             position: CatalogPosition {
                 ra_deg: 279.2,
                 dec_deg: 38.8,
@@ -110,9 +110,9 @@ mod tests {
 
         let json = serde_json::to_value(SkyMapper::to_dto(&snapshot)).unwrap();
         assert_eq!(json["timestamp"], "2026-10-30T20:00:00Z");
-        assert_eq!(json["skyState"], "NUIT");
+        assert_eq!(json["skyState"], "NIGHT");
         assert_eq!(json["localSiderealTimeHours"], 23.7);
-        assert_eq!(json["stars"][0]["name"], "Véga");
+        assert_eq!(json["stars"][0]["name"], "Vega");
         assert_eq!(json["stars"][0]["azimuthDeg"], 281.2809);
         assert_eq!(json["constellations"][0]["frenchName"], "Lyre");
         assert_eq!(json["constellations"][0]["segments"][0]["to"]["altitudeDeg"], -2.0);

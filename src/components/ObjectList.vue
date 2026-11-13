@@ -62,13 +62,13 @@ onUnmounted(() => window.removeEventListener("keydown", onKeydown));
 </script>
 
 <template>
-  <TuiPanel title="Objets">
-    <template #status>{{ objects.length.toString().padStart(2, "0") }} SUIVIS</template>
+  <TuiPanel title="Objects">
+    <template #status>{{ objects.length.toString().padStart(2, "0") }} TRACKED</template>
 
     <p v-if="error" class="object-list__error">SIGNAL LOST · {{ error.message }}</p>
 
     <template v-else>
-      <ul class="object-list" role="listbox" aria-label="Objets suivis">
+      <ul class="object-list" role="listbox" aria-label="Tracked objects">
         <li
           v-for="(object, index) in objects"
           :key="object.noradId"

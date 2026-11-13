@@ -2,7 +2,7 @@ import type { BodyType } from "./sky";
 
 /** Miroirs de `CelestialBodyDto` et `CometCatalogStatusDto`. */
 
-export type Visibility = "VISIBLE" | "SOUS L'HORIZON" | "NOYÉ DANS LE JOUR" | "TROP FAIBLE";
+export type Visibility = "VISIBLE" | "BELOW HORIZON" | "LOST IN DAYLIGHT" | "TOO FAINT";
 
 export interface ConstellationRef {
   abbreviation: string;

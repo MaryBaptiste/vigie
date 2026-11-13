@@ -33,10 +33,10 @@ const focusId = computed(() => (typeof route.query.focus === "string" ? route.qu
 
 const title = computed(() => {
   const o = observer.value;
-  return o ? `Ciel ─ ${o.label} ${shortLatLon(o.latitudeDeg, o.longitudeDeg)}` : "Ciel";
+  return o ? `Sky ─ ${o.label} ${shortLatLon(o.latitudeDeg, o.longitudeDeg)}` : "Sky";
 });
 
-const status = computed(() => (skyError.value ? "ERREUR" : (latest.value?.skyState ?? "…")));
+const status = computed(() => (skyError.value ? "ERROR" : (latest.value?.skyState ?? "…")));
 
 function onPick(latitudeDeg: number, longitudeDeg: number): void {
   void setObserver({ latitudeDeg, longitudeDeg, altitudeM: 0, label: "" });
@@ -87,7 +87,7 @@ useHotkeys({
     </TuiPanel>
 
     <aside class="sky-view__side">
-      <TuiPanel title="Observateur" class="sky-view__observer">
+      <TuiPanel title="Observer" class="sky-view__observer">
         <div class="sky-view__globe">
           <EarthPicker
             v-if="observer"
@@ -99,13 +99,13 @@ useHotkeys({
         <ObserverPanel :observer="observer" :error="observerError?.message ?? null" @change="onObserverChange" />
       </TuiPanel>
 
-      <TuiPanel title="Temps">
+      <TuiPanel title="Time">
         <TimeControls />
       </TuiPanel>
 
-      <TuiPanel v-if="selected" title="Objet">
+      <TuiPanel v-if="selected" title="Object">
         <template #status>[ESC]</template>
-        <DataRow label="Nom" :value="selected.name.toUpperCase()" />
+        <DataRow label="Name" :value="selected.name.toUpperCase()" />
         <DataRow label="Type" :value="selected.subtitle" tone="muted" />
         <DataRow label="Mag" :value="fixed(selected.magnitude, 2, 6)" />
         <DataRow label="Az" :value="`${fixed(selected.azimuthDeg, 2, 6)} ${cardinal(selected.azimuthDeg).padEnd(2)}`" unit="°" />

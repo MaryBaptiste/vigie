@@ -23,9 +23,9 @@ const table = ref<{ moveSelection: (delta: number) => void } | null>(null);
 
 const STATUS_RANK: Readonly<Record<Visibility, number>> = {
   VISIBLE: 0,
-  "TROP FAIBLE": 1,
-  "NOYÉ DANS LE JOUR": 2,
-  "SOUS L'HORIZON": 3,
+  "TOO FAINT": 1,
+  "LOST IN DAYLIGHT": 2,
+  "BELOW HORIZON": 3,
 };
 
 /** Visibles d'abord, puis par hauteur décroissante. */
@@ -35,16 +35,16 @@ function defaultOrder(a: CelestialBody, b: CelestialBody): number {
 
 const columns: readonly TuiColumn<CelestialBody>[] = [
   { key: "symbol", label: "", width: "2ch", align: "center" },
-  { key: "name", label: "Nom", sortValue: (b) => b.name, text: (b) => shortBodyName(b.name).toUpperCase() },
+  { key: "name", label: "Name", sortValue: (b) => b.name, text: (b) => shortBodyName(b.name).toUpperCase() },
   { key: "type", label: "Type", width: "9ch", sortValue: (b) => b.bodyType, text: (b) => bodyTypeLabel(b.bodyType) },
-  { key: "status", label: "Statut", width: "17ch", sortValue: (b) => STATUS_RANK[b.status] },
+  { key: "status", label: "Status", width: "17ch", sortValue: (b) => STATUS_RANK[b.status] },
   { key: "alt", label: "Alt", width: "6ch", align: "right", sortValue: (b) => b.altitudeDeg, text: (b) => fixed(b.altitudeDeg, 1, 5) },
   { key: "az", label: "Az", width: "6ch", align: "right", sortValue: (b) => b.azimuthDeg, text: (b) => fixed(b.azimuthDeg, 1, 5) },
   { key: "mag", label: "Mag", width: "6ch", align: "right", sortValue: (b) => b.magnitude, text: (b) => fixed(b.magnitude, 1, 5) },
   { key: "const", label: "Const.", width: "6ch", sortValue: (b) => b.constellation?.abbreviation ?? "", text: (b) => b.constellation?.abbreviation ?? "---" },
-  { key: "rise", label: "Lever", width: "6ch", sortValue: (b) => b.rise ?? "~", text: (b) => localHourMinute(b.rise) },
-  { key: "transit", label: "Passage", width: "8ch", sortValue: (b) => b.transit ?? "~", text: (b) => localHourMinute(b.transit) },
-  { key: "set", label: "Coucher", width: "8ch", sortValue: (b) => b.set ?? "~", text: (b) => localHourMinute(b.set) },
+  { key: "rise", label: "Rise", width: "6ch", sortValue: (b) => b.rise ?? "~", text: (b) => localHourMinute(b.rise) },
+  { key: "transit", label: "Transit", width: "8ch", sortValue: (b) => b.transit ?? "~", text: (b) => localHourMinute(b.transit) },
+  { key: "set", label: "Set", width: "8ch", sortValue: (b) => b.set ?? "~", text: (b) => localHourMinute(b.set) },
 ];
 
 const selected = computed(() => bodies.value.find((b) => b.id === selectedId.value) ?? null);
@@ -72,9 +72,9 @@ useHotkeys({
 
 <template>
   <main class="bodies-view">
-    <TuiPanel title="Objets visibles" class="bodies-view__list">
+    <TuiPanel title="Visible objects" class="bodies-view__list">
       <template #status>
-        <span v-if="error" class="bodies-view__error">ERREUR</span>
+        <span v-if="error" class="bodies-view__error">ERROR</span>
         <span v-else>{{ visibleCount }} VISIBLE(S) / {{ bodies.length }}</span>
       </template>
       <TuiTable
@@ -92,20 +92,20 @@ useHotkeys({
           <VisibilityLabel :status="row.status" />
         </template>
         <template #empty>
-          <div class="bodies-view__empty">{{ loading ? "CALCUL DES ÉPHÉMÉRIDES…" : (error?.message ?? "AUCUN OBJET") }}</div>
+          <div class="bodies-view__empty">{{ loading ? "COMPUTING EPHEMERIDES…" : (error?.message ?? "NO OBJECTS") }}</div>
         </template>
       </TuiTable>
     </TuiPanel>
 
     <aside class="bodies-view__side">
-      <TuiPanel :title="selected ? shortBodyName(selected.name) : 'Détail'" class="bodies-view__detail">
+      <TuiPanel :title="selected ? shortBodyName(selected.name) : 'Detail'" class="bodies-view__detail">
         <template #status>
-          <TuiButton v-if="selected" hotkey="V" label="Voir dans le ciel" @click="openInSky" />
+          <TuiButton v-if="selected" hotkey="V" label="Show in sky" @click="openInSky" />
         </template>
         <BodyDetail v-if="selected" :body="selected" :southern="southern" />
       </TuiPanel>
 
-      <TuiPanel title="Comètes">
+      <TuiPanel title="Comets">
         <CometStatusPanel :status="cometStatus" :bright-count="brightComets" />
       </TuiPanel>
     </aside>

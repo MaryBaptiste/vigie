@@ -22,7 +22,7 @@ function speedLabel(speed: number): string {
 
 <template>
   <div class="time-controls">
-    <DataRow label="Temps" :value="localDateTime(clock)" />
+    <DataRow label="Time" :value="localDateTime(clock)" />
     <DataRow label="Mode" :value="time.mode.value" :tone="time.live.value ? 'normal' : 'alert'" />
     <div class="time-controls__row">
       <TuiButton label="‖" :active="time.paused.value" @click="time.togglePause()" />
@@ -37,11 +37,11 @@ function speedLabel(speed: number): string {
     <div class="time-controls__row">
       <TuiButton label="-1h" @click="time.step(-1)" />
       <TuiButton label="+1h" @click="time.step(1)" />
-      <TuiButton label="⟲ Maintenant" :active="time.live.value" @click="time.now()" />
+      <TuiButton label="⟲ Now" :active="time.live.value" @click="time.now()" />
     </div>
     <div class="time-controls__row">
       <TuiInput v-model="dateInput" label="Date" type="datetime-local" width="17ch" @submit="goToDate" />
-      <TuiButton label="Aller" @click="goToDate" />
+      <TuiButton label="Go" @click="goToDate" />
     </div>
   </div>
 </template>

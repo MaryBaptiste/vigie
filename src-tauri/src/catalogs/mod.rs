@@ -133,7 +133,7 @@ mod tests {
         let sirius = c.stars.iter().find(|s| s.id == 2491).unwrap();
         assert_eq!(sirius.name.as_deref(), Some("Sirius"));
         let vega = c.stars.iter().find(|s| s.id == 7001).unwrap();
-        assert_eq!(vega.name.as_deref(), Some("Véga"));
+        assert_eq!(vega.name.as_deref(), Some("Vega"));
         let big_dipper = c.constellations.iter().find(|c| c.abbreviation == "UMa").unwrap();
         assert_eq!(big_dipper.french_name, "Grande Ourse");
     }

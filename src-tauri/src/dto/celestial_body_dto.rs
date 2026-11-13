@@ -13,11 +13,11 @@ pub enum BodyTypeDto {
 pub enum VisibilityDto {
     #[serde(rename = "VISIBLE")]
     Visible,
-    #[serde(rename = "SOUS L'HORIZON")]
+    #[serde(rename = "BELOW HORIZON")]
     BelowHorizon,
-    #[serde(rename = "NOYÉ DANS LE JOUR")]
+    #[serde(rename = "LOST IN DAYLIGHT")]
     LostInDaylight,
-    #[serde(rename = "TROP FAIBLE")]
+    #[serde(rename = "TOO FAINT")]
     TooFaint,
 }
 
