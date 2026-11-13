@@ -33,25 +33,25 @@ const meanSolar = computed(() => {
 
 const toggles = computed(() => [
   { key: "C", label: "CONST.", on: props.showConstellations },
-  { key: "N", label: "NOMS", on: props.showNames },
-  { key: "G", label: "GRILLE", on: props.showGrid },
+  { key: "N", label: "NAMES", on: props.showNames },
+  { key: "G", label: "GRID", on: props.showGrid },
 ]);
 </script>
 
 <template>
   <footer class="sky-status-bar">
-    <span>SIDÉRAL {{ sidereal }}</span>
+    <span>SIDEREAL {{ sidereal }}</span>
     <span class="sky-status-bar__sep">│</span>
     <span>LOCAL {{ localClock(clock) }}</span>
     <span class="sky-status-bar__sep">│</span>
     <span>UTC {{ utcClock(clock) }}</span>
     <span class="sky-status-bar__sep">│</span>
-    <span class="sky-status-bar__muted">SOL. MOY. {{ meanSolar }}</span>
+    <span class="sky-status-bar__muted">MEAN SOL. {{ meanSolar }}</span>
     <span class="sky-status-bar__spacer" />
     <span v-for="t in toggles" :key="t.key" class="sky-status-bar__toggle" :class="{ 'sky-status-bar__toggle--on': t.on }">
       [{{ t.key }}] {{ t.label }}
     </span>
-    <span class="sky-status-bar__muted">[R] VUE</span>
+    <span class="sky-status-bar__muted">[R] VIEW</span>
   </footer>
 </template>
 

@@ -90,7 +90,7 @@ impl Situation {
         let (id, name, kind, geocentric, distance_au, heliocentric_distance_au, magnitude) = match *target {
             Target::Sun => (
                 "sun".to_string(),
-                "Soleil".to_string(),
+                "Sun".to_string(),
                 BodyKind::Sun,
                 self.sun.equatorial,
                 self.sun.distance_au,
@@ -106,7 +106,7 @@ impl Situation {
                 moon_phase_kind = Some(MoonPhaseKind::from_elongation(phase.elongation_deg));
                 (
                     "moon".to_string(),
-                    "Lune".to_string(),
+                    "Moon".to_string(),
                     BodyKind::Moon,
                     moon.equatorial,
                     moon.distance_au(),

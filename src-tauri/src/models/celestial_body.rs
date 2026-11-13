@@ -26,11 +26,11 @@ impl BodyKind {
 
     pub fn planet_name(planet: Planet) -> &'static str {
         match planet {
-            Planet::Mercury => "Mercure",
-            Planet::Venus => "Vénus",
+            Planet::Mercury => "Mercury",
+            Planet::Venus => "Venus",
             Planet::Mars => "Mars",
             Planet::Jupiter => "Jupiter",
-            Planet::Saturn => "Saturne",
+            Planet::Saturn => "Saturn",
             Planet::Uranus => "Uranus",
             Planet::Neptune => "Neptune",
         }

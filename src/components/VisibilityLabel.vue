@@ -5,9 +5,9 @@ defineProps<{ status: Visibility }>();
 
 const TONES: Readonly<Record<Visibility, string>> = {
   VISIBLE: "visible",
-  "SOUS L'HORIZON": "below",
-  "NOYÉ DANS LE JOUR": "daylight",
-  "TROP FAIBLE": "faint",
+  "BELOW HORIZON": "below",
+  "LOST IN DAYLIGHT": "daylight",
+  "TOO FAINT": "faint",
 };
 </script>
 

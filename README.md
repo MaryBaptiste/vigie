@@ -216,7 +216,7 @@ Les raccourcis ne sont actifs que sur l'écran qui les déclare.
 | Donnée | Source | Licence | Stockage |
 |---|---|---|---|
 | Étoiles (V ≤ 6,0 ; 5 080 étoiles) | *Yale Bright Star Catalogue*, 5e éd. révisée (Hoffleit & Warren 1991), via le Harvard TDC / NASA ADC (CDS V/50) | données scientifiques librement réutilisables avec citation | `src-tauri/data/stars.json` |
-| Noms propres des étoiles | *IAU Catalog of Star Names* (WGSN, E. Mamajek), version du 2022-04-04 ; graphies françaises usuelles (Véga, Bételgeuse…) dans `tools/star_names_fr.csv` | CC BY 4.0 (IAU) | dans `stars.json` |
+| Noms propres des étoiles | *IAU Catalog of Star Names* (WGSN, E. Mamajek), version du 2022-04-04 | CC BY 4.0 (IAU) | dans `stars.json` |
 | Tracés des constellations | [d3-celestial](https://github.com/ofrohn/d3-celestial), `constellations.lines.json` © 2015 Olaf Frohn | BSD 3-Clause | `src-tauri/data/constellations.json` |
 | Noms des constellations (latin, français, IAU) | table constituée pour le projet (`tools/constellation_names.csv`), d'après les noms officiels de l'IAU et l'usage français | — | dans `constellations.json` |
 | Limites des constellations | Roman, N. G. 1987, *PASP* 99, 695 (CDS VI/42), copie distribuée par [astropy](https://github.com/astropy/astropy) | données publiques ; fichier astropy sous BSD 3-Clause | `src-tauri/data/boundaries.json` |

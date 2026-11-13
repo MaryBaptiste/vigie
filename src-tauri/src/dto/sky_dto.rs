@@ -12,15 +12,15 @@ pub struct HorizontalDto {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 pub enum SkyStateDto {
-    #[serde(rename = "JOUR")]
+    #[serde(rename = "DAY")]
     Day,
-    #[serde(rename = "CRÉPUSCULE CIVIL")]
+    #[serde(rename = "CIVIL TWILIGHT")]
     CivilTwilight,
-    #[serde(rename = "CRÉPUSCULE NAUTIQUE")]
+    #[serde(rename = "NAUTICAL TWILIGHT")]
     NauticalTwilight,
-    #[serde(rename = "CRÉPUSCULE ASTRONOMIQUE")]
+    #[serde(rename = "ASTRONOMICAL TWILIGHT")]
     AstronomicalTwilight,
-    #[serde(rename = "NUIT")]
+    #[serde(rename = "NIGHT")]
     Night,
 }
 

@@ -28,9 +28,9 @@ useHotkeys({
   <div class="app">
     <nav class="app__nav">
       <span class="app__brand">VIGIE</span>
-      <TuiButton hotkey="F1" label="Orbite" :active="route.name === 'orbit'" @click="router.push({ name: 'orbit' })" />
-      <TuiButton hotkey="F2" label="Ciel" :active="route.name === 'sky'" @click="router.push({ name: 'sky' })" />
-      <TuiButton hotkey="F3" label="Objets" :active="route.name === 'bodies'" @click="router.push({ name: 'bodies' })" />
+      <TuiButton hotkey="F1" label="Orbit" :active="route.name === 'orbit'" @click="router.push({ name: 'orbit' })" />
+      <TuiButton hotkey="F2" label="Sky" :active="route.name === 'sky'" @click="router.push({ name: 'sky' })" />
+      <TuiButton hotkey="F3" label="Objects" :active="route.name === 'bodies'" @click="router.push({ name: 'bodies' })" />
       <span class="app__spacer" />
       <template v-if="route.meta.planetarium">
         <span class="app__location">{{ location }}</span>

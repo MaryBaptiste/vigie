@@ -10,25 +10,25 @@ pub const CATALOGUE: [SpaceObject; 4] = [
         norad_id: 25544,
         name: "ISS (ZARYA)",
         short_name: "ISS",
-        description: "Station spatiale internationale",
+        description: "International Space Station",
     },
     SpaceObject {
         norad_id: 20580,
         name: "Hubble Space Telescope",
         short_name: "HUBBLE",
-        description: "Télescope spatial NASA/ESA",
+        description: "NASA/ESA space telescope",
     },
     SpaceObject {
         norad_id: 48274,
         name: "Tiangong (Tianhe)",
         short_name: "TIANGONG",
-        description: "Station spatiale chinoise, module central",
+        description: "Chinese space station, core module",
     },
     SpaceObject {
         norad_id: 49260,
         name: "Landsat 9",
         short_name: "LANDSAT-9",
-        description: "Observation de la Terre, orbite héliosynchrone",
+        description: "Earth observation, Sun-synchronous orbit",
     },
 ];
 

@@ -36,19 +36,19 @@ const sections = computed<Row[][]>(() => {
       { label: "Lat", value: signed(t.latitudeDeg, 4, w), unit: "°" },
       { label: "Lon", value: signed(t.longitudeDeg, 4, w), unit: "°" },
       { label: "Alt", value: fixed(t.altitudeKm, 2, w), unit: "km" },
-      { label: "Vitesse", value: fixed(t.speedKmS, 3, w), unit: "km/s" },
+      { label: "Speed", value: fixed(t.speedKmS, 3, w), unit: "km/s" },
     ],
     [
-      { label: "Inclinaison", value: fixed(t.inclinationDeg, 3, w), unit: "°" },
-      { label: "Période", value: fixed(t.periodMin, 2, w), unit: "min" },
-      { label: "Apogée", value: fixed(t.apogeeKm, 1, w), unit: "km" },
-      { label: "Périgée", value: fixed(t.perigeeKm, 1, w), unit: "km" },
-      { label: "Excentricité", value: fixed(t.eccentricity, 7, w) },
-      { label: "Révolution", value: integer(t.revolutionNumber, w), unit: "#" },
+      { label: "Inclination", value: fixed(t.inclinationDeg, 3, w), unit: "°" },
+      { label: "Period", value: fixed(t.periodMin, 2, w), unit: "min" },
+      { label: "Apogee", value: fixed(t.apogeeKm, 1, w), unit: "km" },
+      { label: "Perigee", value: fixed(t.perigeeKm, 1, w), unit: "km" },
+      { label: "Eccentricity", value: fixed(t.eccentricity, 7, w) },
+      { label: "Revolution", value: integer(t.revolutionNumber, w), unit: "#" },
     ],
     [
-      { label: "Époque TLE", value: utcDateTime(t.tleEpoch) },
-      { label: "Âge TLE", value: fixed(t.tleAgeHours, 1, w), unit: "h", alert: isStale.value },
+      { label: "TLE epoch", value: utcDateTime(t.tleEpoch) },
+      { label: "TLE age", value: fixed(t.tleAgeHours, 1, w), unit: "h", alert: isStale.value },
     ],
   ];
 });
@@ -60,7 +60,7 @@ function rowTone(row: Row): "normal" | "alert" | "muted" {
 </script>
 
 <template>
-  <TuiPanel :title="objectName ? `Télémétrie · ${objectName}` : 'Télémétrie'" class="telemetry-panel">
+  <TuiPanel :title="objectName ? `Telemetry · ${objectName}` : 'Telemetry'" class="telemetry-panel">
     <template #status>
       <span v-if="signalLost" class="status status--danger">SIGNAL LOST</span>
       <span v-else-if="isStale" class="status status--alert">DATA STALE</span>
@@ -84,15 +84,15 @@ function rowTone(row: Row): "normal" | "alert" | "muted" {
     <div v-else-if="error" class="telemetry-panel__message telemetry-panel__message--danger">
       <p class="telemetry-panel__headline">*** SIGNAL LOST ***</p>
       <p class="telemetry-panel__detail">{{ error.message }}</p>
-      <p class="telemetry-panel__detail">Nouvelle tentative en cours<span class="cursor">_</span></p>
+      <p class="telemetry-panel__detail">Retrying<span class="cursor">_</span></p>
     </div>
 
     <div v-else class="telemetry-panel__message">
-      <p>Acquisition du signal<span class="cursor">_</span></p>
+      <p>Acquiring signal<span class="cursor">_</span></p>
     </div>
 
     <p v-if="telemetry && error" class="telemetry-panel__footer">
-      Dernières valeurs connues · {{ error.message }}
+      Last known values · {{ error.message }}
     </p>
   </TuiPanel>
 </template>

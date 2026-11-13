@@ -78,14 +78,14 @@ impl CelestialBodyMapper {
 
     fn phase_name(phase: MoonPhaseKind) -> &'static str {
         match phase {
-            MoonPhaseKind::New => "NOUVELLE LUNE",
-            MoonPhaseKind::WaxingCrescent => "PREMIER CROISSANT",
-            MoonPhaseKind::FirstQuarter => "PREMIER QUARTIER",
-            MoonPhaseKind::WaxingGibbous => "GIBBEUSE CROISSANTE",
-            MoonPhaseKind::Full => "PLEINE LUNE",
-            MoonPhaseKind::WaningGibbous => "GIBBEUSE DÉCROISSANTE",
-            MoonPhaseKind::LastQuarter => "DERNIER QUARTIER",
-            MoonPhaseKind::WaningCrescent => "DERNIER CROISSANT",
+            MoonPhaseKind::New => "NEW MOON",
+            MoonPhaseKind::WaxingCrescent => "WAXING CRESCENT",
+            MoonPhaseKind::FirstQuarter => "FIRST QUARTER",
+            MoonPhaseKind::WaxingGibbous => "WAXING GIBBOUS",
+            MoonPhaseKind::Full => "FULL MOON",
+            MoonPhaseKind::WaningGibbous => "WANING GIBBOUS",
+            MoonPhaseKind::LastQuarter => "LAST QUARTER",
+            MoonPhaseKind::WaningCrescent => "WANING CRESCENT",
         }
     }
 
@@ -110,7 +110,7 @@ mod tests {
     fn moon() -> CelestialBody {
         CelestialBody {
             id: "moon".into(),
-            name: "Lune".into(),
+            name: "Moon".into(),
             kind: BodyKind::Moon,
             equatorial: Equatorial { ra_deg: 102.091_471_9, dec_deg: 26.63 },
             horizontal: Horizontal { azimuth_deg: 50.357_218, altitude_deg: 1.2 },
@@ -150,17 +150,17 @@ mod tests {
         assert_eq!(dto.right_ascension_deg, 102.0915);
         assert!((dto.distance_km.unwrap() - 373_994.7).abs() < 1.0);
         assert_eq!(dto.rise.as_deref(), Some("2026-10-30T19:00:00Z"));
-        assert_eq!(dto.phase_name.as_deref(), Some("GIBBEUSE DÉCROISSANTE"));
+        assert_eq!(dto.phase_name.as_deref(), Some("WANING GIBBOUS"));
         assert_eq!(dto.night.altitudes, vec![-10.12, 20.0]);
     }
 
     #[test]
     fn serializes_french_statuses() {
         let json = serde_json::to_value(CelestialBodyMapper::to_dto(&report(moon()))).unwrap();
-        assert_eq!(json["status"], "SOUS L'HORIZON");
+        assert_eq!(json["status"], "BELOW HORIZON");
         assert_eq!(json["bodyType"], "MOON");
         assert!(json["night"]["sunrise"].is_null());
-        assert_eq!(serde_json::to_value(VisibilityDto::LostInDaylight).unwrap(), "NOYÉ DANS LE JOUR");
+        assert_eq!(serde_json::to_value(VisibilityDto::LostInDaylight).unwrap(), "LOST IN DAYLIGHT");
     }
 
     #[test]

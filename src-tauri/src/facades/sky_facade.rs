@@ -132,8 +132,8 @@ mod tests {
     #[test]
     fn polaris_stands_due_north_above_paris() {
         let sky = facade(Observer::paris()).get_sky(Some("2026-10-30T20:00:00Z")).unwrap();
-        let polaris = sky.stars.iter().find(|s| s.id == 424).expect("Polaire visible");
-        assert_eq!(polaris.name.as_deref(), Some("Polaire"));
+        let polaris = sky.stars.iter().find(|s| s.id == 424).expect("Polaris visible");
+        assert_eq!(polaris.name.as_deref(), Some("Polaris"));
         assert!((polaris.altitude_deg - 48.9).abs() < 0.5, "hauteur {}", polaris.altitude_deg);
         let azimuth = crate::astronomy::angles::normalize_signed_degrees(polaris.azimuth_deg);
         assert!(azimuth.abs() < 1.5, "azimut {azimuth}");
@@ -145,7 +145,7 @@ mod tests {
     fn southern_cross_but_no_polaris_from_sydney() {
         // Avril, 22 h à Sydney : la Croix du Sud est haute dans le ciel.
         let sky = facade(sydney()).get_sky(Some("2026-04-15T12:00:00Z")).unwrap();
-        assert!(sky.stars.iter().all(|s| s.id != 424), "Polaire sous l'horizon");
+        assert!(sky.stars.iter().all(|s| s.id != 424), "Polaris below the horizon");
         assert!(sky.stars.iter().any(|s| s.id == 4730), "Acrux visible");
         let crux = sky.constellations.iter().find(|c| c.abbreviation == "Cru").expect("Croix du Sud");
         assert_eq!(crux.french_name, "Croix du Sud");

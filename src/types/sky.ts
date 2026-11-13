@@ -3,11 +3,11 @@ import type { Observer } from "./observer";
 /** Miroirs de `SkyDto` et de ses sous-structures (src-tauri/src/dto/sky_dto.rs). */
 
 export type SkyState =
-  | "JOUR"
-  | "CRÉPUSCULE CIVIL"
-  | "CRÉPUSCULE NAUTIQUE"
-  | "CRÉPUSCULE ASTRONOMIQUE"
-  | "NUIT";
+  | "DAY"
+  | "CIVIL TWILIGHT"
+  | "NAUTICAL TWILIGHT"
+  | "ASTRONOMICAL TWILIGHT"
+  | "NIGHT";
 
 export type BodyType = "SUN" | "MOON" | "PLANET" | "COMET";
 

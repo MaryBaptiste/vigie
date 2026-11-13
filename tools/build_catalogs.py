@@ -64,8 +64,7 @@ def parse_float(text: str) -> float | None:
 
 
 def load_star_names() -> dict[int, str]:
-    """Nom IAU (avec diacritiques) indexé par numéro HR, francisé si besoin."""
-    french = {row["iau"]: row["french"] for row in read_semicolon_csv(TOOLS_DIR / "star_names_fr.csv")}
+    """Nom IAU (avec diacritiques) indexé par numéro HR."""
     names: dict[int, str] = {}
     for line in (RAW_DIR / "IAU-CSN.txt").read_text(encoding="utf-8").splitlines():
         if line.startswith(("#", "$")) or not line.strip():
@@ -73,9 +72,7 @@ def load_star_names() -> dict[int, str]:
         designation = line[36:49].strip()
         if not designation.startswith("HR "):
             continue
-        ascii_name = line[0:18].strip()
-        name = french.get(ascii_name, line[18:36].strip())
-        names[int(designation[3:])] = name
+        names[int(designation[3:])] = line[18:36].strip()
     return names
 
 
